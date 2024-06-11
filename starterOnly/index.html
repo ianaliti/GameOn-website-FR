@@ -61,8 +61,7 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validateForm()"
-            >
+                >
               <div
                 class="formData">
                 <label for="first">Prénom</label><br>
@@ -72,10 +71,9 @@
                   id="first"
                   name="first"
                   minlength="2"
-                  required
                 />
-                <span id="first-error" class="error-message"></span>
                 <br>
+                <div id="error" class="data-error error"></div>
               </div>
               <div
                 class="formData">
@@ -85,10 +83,9 @@
                   type="text"
                   id="last"
                   name="last"
-                  required
                 />
-                <span id="last-error" class="error-message"></span>
                 <br>
+                <div id="error" class="data-error error"></div>
               </div>
               <div
                 class="formData">
@@ -98,10 +95,9 @@
                   type="email"
                   id="email"
                   name="email"
-                  required
                 />
-                <span id="email-error" class="error-message"></span>
                 <br>
+                <div id="error" class="data-error error"></div>
               </div>
               <div
                 class="formData">
@@ -112,8 +108,8 @@
                   id="birthdate"
                   name="birthdate"
                 />
-                <div class="error"></div>
                 <br>
+                <div id="error" class="data-error"></div>
               </div>
               <div
                 class="formData">

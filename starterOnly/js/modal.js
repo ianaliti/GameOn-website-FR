@@ -30,58 +30,99 @@ function closeModal() {
 const first = document.getElementById('first');
 const last = document.getElementById('last');
 const email = document.getElementById('email');
+const form = document.querySelector("form");
 
 
-const setError = (element, message) => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.error-message"');
+email.addEventListener("change", () => {
+  console.log(email.value)
+})
 
-  errorDisplay.innerText = message;
-  inputControl.classList.add('error');
-  inputControl.classList.remove('success')
-}
+
+
+
+// const setError = (element, message) => {
+//   const formData = element.parentElement;
+//   const errorDisplay = formData.querySelector('.error');
+
+//   errorDisplay.innerText = message;
+//   formData.classList.add('data-error');
+//   formData.classList.remove('success')
+// }
+
+
+
+// function setError(element, message) {
+//   const data = element.parentElement;
+//   const errorDisplay = document.querySelector('.error');
+//   if (element.value === '') {
+//     data.classList.add('data-error')
+//     errorDisplay.innerText = message;
+//   } else {
+//     data.classList.remove('data-error')
+//   }
+// }
+
+
 
 const setSuccess = element => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.error-message"');
+  const data = element.parentElement;
+  const errorDisplay = document.querySelector('.error');
 
   errorDisplay.innerText = '';
-  inputControl.classList.add('success');
-  inputControl.classList.remove('error');
+  data.classList.add('success');
+  data.classList.remove('error');
 };
 
 const isValidEmail = email => {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+");
+  return emailRegExp.test((email).toLowerCase());
 }
 
-
-
-function validateForm() {
-  
-  const first = first.value.trim();
-  const last = last.value.trim();
+const validateForm = () => {
+  const firstName = first.value.trim();
+  const lastName = last.value.trim();
   const emailValue = email.value.trim();
 
 
-  if (first === '') {
-    setError(first, 'Username is required');
+  if (firstName === '') {
+    setError(first, "Votre prénom doit comprendre au moins 2 caractères alphabétiques.");
+    console.log('nope')
   } else {
-    setSuccess(username);
+    // setSuccess(firstName);
+    console.log('yep')
   }
 
-  if (last === '') {
-    setError(last, 'Username is required');
+  if (lastName === '') {
+    setError(last, "Votre nom doit comprendre au moins 2 caractères alphabétiques.");
   } else {
-    setSuccess(username);
+    // setSuccess(lastName);
   }
 
   if (emailValue === '') {
-    setError(email, 'Email is required');
+    setError(email, "Veuillez renseigner une adresse email valide.");
   } else if (!isValidEmail(emailValue)) {
-    setError(email, 'Provide a valid email address');
+    setError(emailValue);
   } else {
-    setSuccess(email);
+    // setSuccess(emailValue);
   }
-};
+
+  console.log('done')
+}
+
+function setError(balise, message) {
+  const errorDisplay = document.querySelector('.error')
+  const data = balise.parentElement;
+  console.log(data);
+  data.classList.add('data-error')
+  data.setAttribute('data-error-visible', true);
+  errorDisplay.innerText = message;
+
+}
+
+
+form.addEventListener('submit', (event) => {
+
+  event.preventDefault()
+  validateForm()
+});
  
