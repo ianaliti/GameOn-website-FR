@@ -20,6 +20,10 @@ const last = document.getElementById('last');
 const email = document.getElementById('email');
 const brtDate = document.getElementById('birthdate');
 const quantityValue = document.getElementById('quantity');
+const locationValue = document.querySelectorAll('input[name="location"]')
+const checkboxInput = document.getElementById('checkbox1')
+
+console.log(checkboxInput)
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -38,13 +42,13 @@ function closeModal() {
 //validate functions
 
 const validateFirst = (name) => {
-  if(name.length < 2) {
+  if (name.length < 2) {
     throw new Error("Votre prénom doit comprendre au moins 2 caractères alphabétiques.")
   }
 }
 
-const validateLast= (surname) => {
-  if(surname.length < 2) {
+const validateLast = (surname) => {
+  if (surname.length < 2) {
     throw new Error("Votre nom doit comprendre au moins 2 caractères alphabétiques.")
   }
 }
@@ -59,15 +63,28 @@ const valideEmail = (email) => {
 const valideDate = (birthday) => {
   let todayDate = new Date();
   let dateRegExp = new RegExp("^((19[2-9][0-9])|(200[0-6]))(\/|-)(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])$");
-  if (!dateRegExp.test(birthday) || new Date(birthday) < todayDate) {
+  if (!dateRegExp.test(birthday) || new Date(birthday) > todayDate) {
     throw new Error("Vous devez entrer votre date de naissance.")
   }
 }
 
 const valideQuantity = (quantity) => {
-  let quantityRegExp = new RegExp("!/^\d+$/");
-  if(!quantityRegExp.test(quantity) || quantity === "") {
-    throw new Error("La quantité doit être un nombre entier.")
+  if (!quantity) {
+    throw new Error("Veuillez choisir un nombre");
+  }
+}
+
+const valideLocation = () => {
+  for (let i = 0; i < locationValue.length; i++) {
+    if (!locationValue[i].checked) {
+      throw new Error("Veuillez choisir une option de localisation.");
+    }
+  }
+}
+
+const validateCheck = (checkboxInput) => {
+  if(!checkboxInput.checked) {
+    throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
 }
 
@@ -79,30 +96,28 @@ const throwError = (message) => {
 
   // spanErrorMessage.forEach((errorElementsId) => {
 
-    // console.log(errorElementsId.getAttribute('id'))
-    if (!spanErrorMessage) {
-      let errorDisplay = document.querySelector('.error')
-      console.log(errorDisplay)
-      spanErrorMessage = document.createElement("span")
-      spanErrorMessage.id = "erreurMessage"
-          
-      errorDisplay.append(spanErrorMessage) 
-    }
-// })
+  // console.log(errorElementsId.getAttribute('id'))
+  if (!spanErrorMessage) {
+    let errorDisplay = document.querySelector('.formData')
+    spanErrorMessage = document.createElement("span")
+    spanErrorMessage.id = "erreurMessage"
 
-
-    spanErrorMessage.innerText = message
+    errorDisplay.append(spanErrorMessage)
+  }
+  // })
+  spanErrorMessage.innerText = message
 }
 
 
 //Validate form
 const validateForm = () => {
 
-const firstName = first.value.trim();
-const lastName = last.value.trim();
-const emailValue = email.value.trim()
-const birthdayDate = brtDate.value.trim();
-const quantity = quantityValue.value.trim();
+  const firstName = first.value.trim();
+  const lastName = last.value.trim();
+  const emailValue = email.value.trim()
+  const birthdayDate = brtDate.value.trim();
+  const quantity = quantityValue.valueAsNumber;
+
 
   try {
     validateFirst(firstName)
@@ -110,6 +125,8 @@ const quantity = quantityValue.value.trim();
     valideEmail(emailValue)
     valideDate(birthdayDate)
     valideQuantity(quantity)
+    valideLocation()
+    validateCheck()
 
     throwError('')
 
@@ -134,4 +151,3 @@ form.addEventListener('submit', (event) => {
   event.preventDefault()
   validateForm()
 });
- 
