@@ -43,13 +43,13 @@ function closeModal() {
 
 const validateFirst = (name) => {
   if (name.length < 2) {
-    throw new Error("Votre prénom doit comprendre au moins 2 caractères alphabétiques.")
+    throw new Error("Votre prénom doit comprendre au moins 2 caractères.")
   }
 }
 
 const validateLast = (surname) => {
   if (surname.length < 2) {
-    throw new Error("Votre nom doit comprendre au moins 2 caractères alphabétiques.")
+    throw new Error("Votre nom doit comprendre au moins 2 caractères.")
   }
 }
 
@@ -82,7 +82,8 @@ const valideLocation = () => {
   }
 }
 
-const validateCheck = (checkboxInput) => {
+const validateCheck = () => {
+  console.log(checkboxInput)
   if(!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
@@ -91,7 +92,7 @@ const validateCheck = (checkboxInput) => {
 //Error messages 
 
 const throwError = (message) => {
-  let spanErrorMessage = document.getElementById('error')
+  let spanErrorMessage = document.getElementById(element.id + '_error')
   // console.log(spanErrorMessage)
 
   // spanErrorMessage.forEach((errorElementsId) => {
