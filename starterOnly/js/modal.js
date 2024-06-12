@@ -13,6 +13,14 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelector(".close");
 
+//Forrm DOM Elements
+const form = document.querySelector("form");
+const first = document.getElementById('first');
+const last = document.getElementById('last');
+const email = document.getElementById('email');
+const brtDate = document.getElementById('birthdate');
+const quantityValue = document.getElementById('quantity');
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 modalClose.addEventListener("click", closeModal);
@@ -26,98 +34,99 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-//form validation 
-const first = document.getElementById('first');
-const last = document.getElementById('last');
-const email = document.getElementById('email');
-const form = document.querySelector("form");
 
+//validate functions
 
-email.addEventListener("change", () => {
-  console.log(email.value)
-})
+const validateFirst = (name) => {
+  if(name.length < 2) {
+    throw new Error("Votre prénom doit comprendre au moins 2 caractères alphabétiques.")
+  }
+}
 
+const validateLast= (surname) => {
+  if(surname.length < 2) {
+    throw new Error("Votre nom doit comprendre au moins 2 caractères alphabétiques.")
+  }
+}
 
-
-
-// const setError = (element, message) => {
-//   const formData = element.parentElement;
-//   const errorDisplay = formData.querySelector('.error');
-
-//   errorDisplay.innerText = message;
-//   formData.classList.add('data-error');
-//   formData.classList.remove('success')
-// }
-
-
-
-// function setError(element, message) {
-//   const data = element.parentElement;
-//   const errorDisplay = document.querySelector('.error');
-//   if (element.value === '') {
-//     data.classList.add('data-error')
-//     errorDisplay.innerText = message;
-//   } else {
-//     data.classList.remove('data-error')
-//   }
-// }
-
-
-
-const setSuccess = element => {
-  const data = element.parentElement;
-  const errorDisplay = document.querySelector('.error');
-
-  errorDisplay.innerText = '';
-  data.classList.add('success');
-  data.classList.remove('error');
-};
-
-const isValidEmail = email => {
+const valideEmail = (email) => {
   let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+");
-  return emailRegExp.test((email).toLowerCase());
+  if (!emailRegExp.test(email) || email.value === "") {
+    throw new Error("Veuillez renseigner une adresse email valide.")
+  }
 }
 
+const valideDate = (birthday) => {
+  let todayDate = new Date();
+  let dateRegExp = new RegExp("^((19[2-9][0-9])|(200[0-6]))(\/|-)(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])$");
+  if (!dateRegExp.test(birthday) || new Date(birthday) < todayDate) {
+    throw new Error("Vous devez entrer votre date de naissance.")
+  }
+}
+
+const valideQuantity = (quantity) => {
+  let quantityRegExp = new RegExp("!/^\d+$/");
+  if(!quantityRegExp.test(quantity) || quantity === "") {
+    throw new Error("La quantité doit être un nombre entier.")
+  }
+}
+
+//Error messages 
+
+const throwError = (message) => {
+  let spanErrorMessage = document.getElementById('error')
+  // console.log(spanErrorMessage)
+
+  // spanErrorMessage.forEach((errorElementsId) => {
+
+    // console.log(errorElementsId.getAttribute('id'))
+    if (!spanErrorMessage) {
+      let errorDisplay = document.querySelector('.error')
+      console.log(errorDisplay)
+      spanErrorMessage = document.createElement("span")
+      spanErrorMessage.id = "erreurMessage"
+          
+      errorDisplay.append(spanErrorMessage) 
+    }
+// })
+
+
+    spanErrorMessage.innerText = message
+}
+
+
+//Validate form
 const validateForm = () => {
-  const firstName = first.value.trim();
-  const lastName = last.value.trim();
-  const emailValue = email.value.trim();
 
+const firstName = first.value.trim();
+const lastName = last.value.trim();
+const emailValue = email.value.trim()
+const birthdayDate = brtDate.value.trim();
+const quantity = quantityValue.value.trim();
 
-  if (firstName === '') {
-    setError(first, "Votre prénom doit comprendre au moins 2 caractères alphabétiques.");
-    console.log('nope')
-  } else {
-    // setSuccess(firstName);
-    console.log('yep')
+  try {
+    validateFirst(firstName)
+    validateLast(lastName)
+    valideEmail(emailValue)
+    valideDate(birthdayDate)
+    valideQuantity(quantity)
+
+    throwError('')
+
+  } catch (error) {
+    throwError(error.message)
   }
-
-  if (lastName === '') {
-    setError(last, "Votre nom doit comprendre au moins 2 caractères alphabétiques.");
-  } else {
-    // setSuccess(lastName);
-  }
-
-  if (emailValue === '') {
-    setError(email, "Veuillez renseigner une adresse email valide.");
-  } else if (!isValidEmail(emailValue)) {
-    setError(emailValue);
-  } else {
-    // setSuccess(emailValue);
-  }
-
-  console.log('done')
 }
 
-function setError(balise, message) {
-  const errorDisplay = document.querySelector('.error')
-  const data = balise.parentElement;
-  console.log(data);
-  data.classList.add('data-error')
-  data.setAttribute('data-error-visible', true);
-  errorDisplay.innerText = message;
+// function setError(balise, message) {
+//   const errorDisplay = document.querySelector('.error')
+//   const data = balise.parentElement;
+//   console.log(data);
+//   data.classList.add('data-error')
+//   data.setAttribute('data-error-visible', true);
+//   errorDisplay.innerText = message;
 
-}
+// }
 
 
 form.addEventListener('submit', (event) => {
