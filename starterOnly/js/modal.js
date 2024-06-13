@@ -23,7 +23,6 @@ const quantityValue = document.getElementById('quantity');
 const locationValue = document.querySelectorAll('input[name="location"]')
 const checkboxInput = document.getElementById('checkbox1')
 
-console.log(checkboxInput)
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -84,29 +83,33 @@ const valideLocation = () => {
 
 const validateCheck = () => {
   console.log(checkboxInput)
-  if(!checkboxInput.checked) {
+  if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
 }
 
 //Error messages 
 
-const throwError = (message) => {
+const throwError = (element, message) => {
   let spanErrorMessage = document.getElementById(element.id + '_error')
-  // console.log(spanErrorMessage)
-
-  // spanErrorMessage.forEach((errorElementsId) => {
-
-  // console.log(errorElementsId.getAttribute('id'))
+  
   if (!spanErrorMessage) {
-    let errorDisplay = document.querySelector('.formData')
-    spanErrorMessage = document.createElement("span")
-    spanErrorMessage.id = "erreurMessage"
-
-    errorDisplay.append(spanErrorMessage)
+    spanErrorMessage = document.createElement("span");
+    element.after(spanErrorMessage);
+    spanErrorMessage.id = element.id + "error";
+    spanErrorMessage.parentElement.classList.add("data-error");
+    console.log(spanErrorMessage.parentElement.classList);
+    spanErrorMessage.parentElement.setAttribute('data-error-visible', true);
+    // element.classList.add("data-error");
   }
-  // })
+
   spanErrorMessage.innerText = message
+  element.addEventListener('input', () => {
+    if (spanErrorMessage) {
+      spanErrorMessage.remove()
+      element.classList.remove("errorInput")
+    }
+  })
 }
 
 
@@ -122,17 +125,38 @@ const validateForm = () => {
 
   try {
     validateFirst(firstName)
+  } catch(error) {
+    throwError(first, error.message)
+  } 
+  try {
     validateLast(lastName)
+  } catch(error) {
+    throwError(last, error.message)
+  }
+  try {
     valideEmail(emailValue)
-    valideDate(birthdayDate)
+  } catch(error) {
+    throwError(email, error.message)
+  }
+  try {
+    valideDate(birthdayDate) 
+  } catch(error) {
+    throwError(brtDate, error.message)
+  }
+  try {
     valideQuantity(quantity)
+  } catch(error) {
+    throwError(quantity, error.message)
+  }
+  try {
     valideLocation()
+  } catch(error) {
+    throwError(locationValue, error.message)
+  }
+  try {
     validateCheck()
-
-    throwError('')
-
-  } catch (error) {
-    throwError(error.message)
+  } catch(error) {
+    throwError(checkboxInput, error.message)
   }
 }
 
@@ -148,7 +172,6 @@ const validateForm = () => {
 
 
 form.addEventListener('submit', (event) => {
-
   event.preventDefault()
   validateForm()
 });
