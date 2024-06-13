@@ -43,7 +43,7 @@ function closeModal() {
 const validateFirst = (name) => {
   if (name.length < 2) {
     throw new Error("Votre prénom doit comprendre au moins 2 caractères.")
-  }
+  } 
 }
 
 const validateLast = (surname) => {
@@ -85,6 +85,8 @@ const validateCheck = () => {
   console.log(checkboxInput)
   if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
+  } else {
+    hideError()
   }
 }
 
@@ -92,7 +94,7 @@ const validateCheck = () => {
 
 const throwError = (element, message) => {
   let spanErrorMessage = document.getElementById(element.id + '_error')
-  
+
   if (!spanErrorMessage) {
     spanErrorMessage = document.createElement("span");
     element.after(spanErrorMessage);
@@ -103,14 +105,10 @@ const throwError = (element, message) => {
   
   element.addEventListener('input', () => {
     if (spanErrorMessage) {
-      spanErrorMessage.remove()
+      spanErrorMessage.parentElement.removeAttribute("data-error")
       spanErrorMessage.parentElement.setAttribute("data-error-visible", false)
     }
   })
-}
-
-const hideError = () => {
-  
 }
 
 
@@ -126,37 +124,43 @@ const validateForm = () => {
 
   try {
     validateFirst(firstName)
-  } catch(error) {
+    throwError(first, '')
+  } catch (error) {
     throwError(first, error.message)
-  } 
+  }
   try {
     validateLast(lastName)
-  } catch(error) {
+    throwError(lastName, '')
+  } catch (error) {
     throwError(last, error.message)
   }
   try {
     valideEmail(emailValue)
-  } catch(error) {
+    throwError(emailValue, '')
+  } catch (error) {
     throwError(email, error.message)
   }
   try {
-    valideDate(birthdayDate) 
-  } catch(error) {
+    valideDate(birthdayDate)
+    throwError(birthdayDate, '')
+  } catch (error) {
     throwError(brtDate, error.message)
   }
   try {
     valideQuantity(quantity)
-  } catch(error) {
+    throwError(quantity, '')
+  } catch (error) {
     throwError(quantity, error.message)
   }
   try {
     valideLocation()
-  } catch(error) {
+    // throwError('')
+  } catch (error) {
     throwError(locationValue, error.message)
   }
   try {
     validateCheck()
-  } catch(error) {
+  } catch (error) {
     throwError(checkboxInput, error.message)
   }
 }
