@@ -97,19 +97,20 @@ const throwError = (element, message) => {
     spanErrorMessage = document.createElement("span");
     element.after(spanErrorMessage);
     spanErrorMessage.id = element.id + "error";
-    spanErrorMessage.parentElement.classList.add("data-error");
-    console.log(spanErrorMessage.parentElement.classList);
-    spanErrorMessage.parentElement.setAttribute('data-error-visible', true);
-    // element.classList.add("data-error");
+    spanErrorMessage.parentElement.setAttribute("data-error", message);
+    spanErrorMessage.parentElement.setAttribute("data-error-visible", true);
   }
-
-  spanErrorMessage.innerText = message
+  
   element.addEventListener('input', () => {
     if (spanErrorMessage) {
       spanErrorMessage.remove()
-      element.classList.remove("errorInput")
+      spanErrorMessage.parentElement.setAttribute("data-error-visible", false)
     }
   })
+}
+
+const hideError = () => {
+  
 }
 
 
