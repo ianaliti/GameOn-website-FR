@@ -67,22 +67,21 @@ const valideDate = (birthday) => {
   }
 }
 
-const valideQuantity = (quantity) => {
-  if (!quantity) {
+const valideQuantity = (num) => {
+  if (!parseInt(num)) {
     throw new Error("Veuillez choisir un nombre");
   }
 }
 
-const valideLocation = () => {
-  for (let i = 0; i < locationValue.length; i++) {
-    if (!locationValue[i].checked) {
+const valideLocation = (location) => {
+  for (let i = 0; i < location.length; i++) {
+    if (!location[i].checked) {
       throw new Error("Veuillez choisir une option de localisation.");
     }
   }
 }
 
 const validateCheck = () => {
-  console.log(checkboxInput)
   if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
@@ -90,14 +89,21 @@ const validateCheck = () => {
 
 //Error messages 
 
-const throwError = (element, message) => {  
-      element.parentElement.setAttribute("data-error", message);
-      element.parentElement.setAttribute("data-error-visible", true);
+const throwError = (element, message) => {
+  console.log(element)
+  element.parentElement.setAttribute("data-error", message);
+  element.parentElement.setAttribute("data-error-visible", true);
 }
 
+// const radioBtn = (element, message) => {
+//   let formDataClass = document.querySelector("formData input")
+//   console.log(element.parentElement)
+//   console.log(element.closest('.formData'))
+// }
+
 const hideError = (element) => {
-    element.parentElement.removeAttribute("data-error");
-    element.parentElement.removeAttribute("data-error-visible", true);
+  element.parentElement.removeAttribute("data-error");
+  element.parentElement.removeAttribute("data-error-visible", true);
 }
 
 
@@ -110,48 +116,48 @@ const validateForm = () => {
   const birthdayDate = brtDate.value.trim();
   const quantity = quantityValue.valueAsNumber;
 
-
-  try {
-    validateFirst(firstName)
-    hideError(first)
-  } catch (error) {
-    throwError(first, error.message)
-  }
-  try {
-    validateLast(lastName)
-    hideError(last)
-  } catch (error) {
-    throwError(last, error.message)
-  }
-  try {
-    valideEmail(emailValue)
-    hideError(email)
-  } catch (error) {
-    throwError(email, error.message)
-  }
-  try {
-    valideDate(birthdayDate)
-    hideError(brtDate)
-  } catch (error) {
-    throwError(brtDate, error.message)
-  }
   // try {
-  //   valideQuantity(quantity)
-  //   throwError(quantity, '')
+  //   validateFirst(firstName)
+  //   hideError(first)
   // } catch (error) {
-  //   throwError(quantity, error.message)
+  //   throwError(first, error.message)
   // }
   // try {
-  //   valideLocation()
-  //   // throwError('')
+  //   validateLast(lastName)
+  //   hideError(last)
   // } catch (error) {
-  //   throwError(locationValue, error.message)
+  //   throwError(last, error.message)
   // }
   // try {
-  //   validateCheck()
+  //   valideEmail(emailValue)
+  //   hideError(email)
   // } catch (error) {
-  //   throwError(checkboxInput, error.message)
+  //   throwError(email, error.message)
   // }
+  // try {
+  //   valideDate(birthdayDate)
+  //   hideError(brtDate)
+  // } catch (error) {
+  //   throwError(brtDate, error.message)
+  // }
+  try {
+    valideQuantity(quantity)
+    hideError(quantityValue)
+  } catch (error) {
+    throwError(quantityValue, error.message)
+  }
+  try {
+    valideLocation(locationValue)
+    hideError(locationValue)
+  } catch (error) {
+    hideError(locationValue, error.message)
+  }
+  try {
+    validateCheck()
+    // hideError()
+  } catch (error) {
+    throwError(checkboxInput, error.message)
+  }
 }
 
 
