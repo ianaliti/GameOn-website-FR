@@ -43,7 +43,7 @@ function closeModal() {
 const validateFirst = (name) => {
   if (name.length < 2) {
     throw new Error("Votre prénom doit comprendre au moins 2 caractères.")
-  } 
+  }
 }
 
 const validateLast = (surname) => {
@@ -85,30 +85,19 @@ const validateCheck = () => {
   console.log(checkboxInput)
   if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
-  } else {
-    hideError()
   }
 }
 
 //Error messages 
 
-const throwError = (element, message) => {
-  let spanErrorMessage = document.getElementById(element.id + '_error')
+const throwError = (element, message) => {  
+      element.parentElement.setAttribute("data-error", message);
+      element.parentElement.setAttribute("data-error-visible", true);
+}
 
-  if (!spanErrorMessage) {
-    spanErrorMessage = document.createElement("span");
-    element.after(spanErrorMessage);
-    spanErrorMessage.id = element.id + "error";
-    spanErrorMessage.parentElement.setAttribute("data-error", message);
-    spanErrorMessage.parentElement.setAttribute("data-error-visible", true);
-  }
-  
-  element.addEventListener('input', () => {
-    if (spanErrorMessage) {
-      spanErrorMessage.parentElement.removeAttribute("data-error")
-      spanErrorMessage.parentElement.setAttribute("data-error-visible", false)
-    }
-  })
+const hideError = (element) => {
+    element.parentElement.removeAttribute("data-error");
+    element.parentElement.removeAttribute("data-error-visible", true);
 }
 
 
@@ -124,56 +113,46 @@ const validateForm = () => {
 
   try {
     validateFirst(firstName)
-    throwError(first, '')
+    hideError(first)
   } catch (error) {
     throwError(first, error.message)
   }
   try {
     validateLast(lastName)
-    throwError(lastName, '')
+    hideError(last)
   } catch (error) {
     throwError(last, error.message)
   }
   try {
     valideEmail(emailValue)
-    throwError(emailValue, '')
+    hideError(email)
   } catch (error) {
     throwError(email, error.message)
   }
   try {
     valideDate(birthdayDate)
-    throwError(birthdayDate, '')
+    hideError(brtDate)
   } catch (error) {
     throwError(brtDate, error.message)
   }
-  try {
-    valideQuantity(quantity)
-    throwError(quantity, '')
-  } catch (error) {
-    throwError(quantity, error.message)
-  }
-  try {
-    valideLocation()
-    // throwError('')
-  } catch (error) {
-    throwError(locationValue, error.message)
-  }
-  try {
-    validateCheck()
-  } catch (error) {
-    throwError(checkboxInput, error.message)
-  }
+  // try {
+  //   valideQuantity(quantity)
+  //   throwError(quantity, '')
+  // } catch (error) {
+  //   throwError(quantity, error.message)
+  // }
+  // try {
+  //   valideLocation()
+  //   // throwError('')
+  // } catch (error) {
+  //   throwError(locationValue, error.message)
+  // }
+  // try {
+  //   validateCheck()
+  // } catch (error) {
+  //   throwError(checkboxInput, error.message)
+  // }
 }
-
-// function setError(balise, message) {
-//   const errorDisplay = document.querySelector('.error')
-//   const data = balise.parentElement;
-//   console.log(data);
-//   data.classList.add('data-error')
-//   data.setAttribute('data-error-visible', true);
-//   errorDisplay.innerText = message;
-
-// }
 
 
 form.addEventListener('submit', (event) => {
