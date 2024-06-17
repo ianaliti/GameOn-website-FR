@@ -73,9 +73,8 @@ const valideQuantity = (num) => {
   }
 }
 
-const valideLocation = (location) => {
-  const isChecked = Array.from(location).some(loc => loc.checked);
-  console.log(isChecked)
+const valideLocation = () => {
+  const isChecked = Array.from(locationValue).some(loc => loc.checked);
   if (!isChecked) {
     throw new Error("Veuillez choisir une option de localisation.");
   }
@@ -90,34 +89,17 @@ const validateCheck = (input) => {
 //Error messages 
 
 const throwError = (element, message) => {
+  console.log(element)
   element.parentElement.setAttribute("data-error", message);
   element.parentElement.setAttribute("data-error-visible", true);
 }
 
-const throwErrorCheckbox = (element, message) => {
-  const loc = document.querySelector('input[type=radio]')
-  console.log(loc)
-  if (loc) {
-    console.log(loc)
-    loc.parentElement.setAttribute("data-error", message);
-    loc.parentElement.setAttribute("data-error-visible", true);
-  }
-    const conditionUtilis = document.querySelector('input[type=checkbox]')
-    conditionUtilis.parentElement.setAttribute("data-error", message);
-    conditionUtilis.parentElement.setAttribute("data-error-visible", true);
-  }
-
 const hideError = (element) => {
+  console.log(element)
   element.parentElement.removeAttribute("data-error");
   element.parentElement.removeAttribute("data-error-visible", true);
 }
 
-// const hideErrorCheckbox = (element) => {
-//   console.log(element)
-//   let loc = document.querySelector('.checkbox-input')
-//   loc.parentElement.removeAttribute("data-error");
-//   loc.parentElement.removeAttribute("data-error-visible", true);
-// }
 
 
 //Validate form
@@ -128,6 +110,8 @@ const validateForm = () => {
   const emailValue = email.value.trim()
   const birthdayDate = brtDate.value.trim();
   const quantity = quantityValue.valueAsNumber;
+  const parentLocation = locationValue[0];
+  const checkboxCondition = checkboxInput[0];
 
   // try {
   //   validateFirst(firstName)
@@ -160,17 +144,17 @@ const validateForm = () => {
   //   throwError(quantityValue, error.message)
   // }
   try {
-    valideLocation(locationValue)
-    hideError(locationValue)
+    valideLocation()
+    hideError(parentLocation)
   } catch (error) {
-    throwErrorCheckbox(locationValue, error.message)
+    throwError(parentLocation, error.message)
   }
-  // try {
-  //   validateCheck(checkboxInput)
-  //   hideErrorCheckbox(checkboxInput)
-  // } catch (error) {
-  //   throwErrorCheckbox(checkboxInput, error.message)
-  // }
+  try {
+    validateCheck(checkboxInput)
+    hideError(checkboxCondition)
+  } catch (error) {
+    throwError(checkboxCondition, error.message)
+  }
 }
 
 
