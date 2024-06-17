@@ -111,7 +111,7 @@ const validateForm = () => {
   const birthdayDate = brtDate.value.trim();
   const quantity = quantityValue.valueAsNumber;
   const parentLocation = locationValue[0];
-  const checkboxCondition = checkboxInput[0];
+
 
   // try {
   //   validateFirst(firstName)
@@ -143,17 +143,17 @@ const validateForm = () => {
   // } catch (error) {
   //   throwError(quantityValue, error.message)
   // }
-  try {
-    valideLocation()
-    hideError(parentLocation)
-  } catch (error) {
-    throwError(parentLocation, error.message)
-  }
+  // try {
+  //   valideLocation()
+  //   hideError(parentLocation)
+  // } catch (error) {
+  //   throwError(parentLocation, error.message)
+  // }
   try {
     validateCheck(checkboxInput)
-    hideError(checkboxCondition)
+    hideError(checkboxInput)
   } catch (error) {
-    throwError(checkboxCondition, error.message)
+    throwError(checkboxInput, error.message)
   }
 }
 
