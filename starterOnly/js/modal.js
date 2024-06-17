@@ -74,15 +74,15 @@ const valideQuantity = (num) => {
 }
 
 const valideLocation = (location) => {
-  for (let i = 0; i < location.length; i++) {
-    if (!location[i].checked) {
-      throw new Error("Veuillez choisir une option de localisation.");
-    }
+  const isChecked = Array.from(location).some(loc => loc.checked);
+  console.log(isChecked)
+  if (!isChecked) {
+    throw new Error("Veuillez choisir une option de localisation.");
   }
 }
 
-const validateCheck = () => {
-  if (!checkboxInput.checked) {
+const validateCheck = (input) => {
+  if (!input.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
 }
@@ -90,21 +90,34 @@ const validateCheck = () => {
 //Error messages 
 
 const throwError = (element, message) => {
-  console.log(element)
   element.parentElement.setAttribute("data-error", message);
   element.parentElement.setAttribute("data-error-visible", true);
 }
 
-// const radioBtn = (element, message) => {
-//   let formDataClass = document.querySelector("formData input")
-//   console.log(element.parentElement)
-//   console.log(element.closest('.formData'))
-// }
+const throwErrorCheckbox = (element, message) => {
+  const loc = document.querySelector('input[type=radio]')
+  console.log(loc)
+  if (loc) {
+    console.log(loc)
+    loc.parentElement.setAttribute("data-error", message);
+    loc.parentElement.setAttribute("data-error-visible", true);
+  }
+    const conditionUtilis = document.querySelector('input[type=checkbox]')
+    conditionUtilis.parentElement.setAttribute("data-error", message);
+    conditionUtilis.parentElement.setAttribute("data-error-visible", true);
+  }
 
 const hideError = (element) => {
   element.parentElement.removeAttribute("data-error");
   element.parentElement.removeAttribute("data-error-visible", true);
 }
+
+// const hideErrorCheckbox = (element) => {
+//   console.log(element)
+//   let loc = document.querySelector('.checkbox-input')
+//   loc.parentElement.removeAttribute("data-error");
+//   loc.parentElement.removeAttribute("data-error-visible", true);
+// }
 
 
 //Validate form
@@ -140,24 +153,24 @@ const validateForm = () => {
   // } catch (error) {
   //   throwError(brtDate, error.message)
   // }
-  try {
-    valideQuantity(quantity)
-    hideError(quantityValue)
-  } catch (error) {
-    throwError(quantityValue, error.message)
-  }
+  // try {
+  //   valideQuantity(quantity)
+  //   hideError(quantityValue)
+  // } catch (error) {
+  //   throwError(quantityValue, error.message)
+  // }
   try {
     valideLocation(locationValue)
     hideError(locationValue)
   } catch (error) {
-    hideError(locationValue, error.message)
+    throwErrorCheckbox(locationValue, error.message)
   }
-  try {
-    validateCheck()
-    // hideError()
-  } catch (error) {
-    throwError(checkboxInput, error.message)
-  }
+  // try {
+  //   validateCheck(checkboxInput)
+  //   hideErrorCheckbox(checkboxInput)
+  // } catch (error) {
+  //   throwErrorCheckbox(checkboxInput, error.message)
+  // }
 }
 
 
