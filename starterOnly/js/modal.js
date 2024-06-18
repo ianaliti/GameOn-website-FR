@@ -114,63 +114,84 @@ const validateForm = () => {
   const quantity = quantityValue.valueAsNumber;
   const parentLocation = locationValue[0];
 
+  let isValide = true;
+
 
   try {
     validateFirst(firstName)
     hideError(first)
   } catch (error) {
     throwError(first, error.message)
+    isValide = false;
   }
   try {
     validateLast(lastName)
     hideError(last)
   } catch (error) {
     throwError(last, error.message)
+    isValide = false;
   }
   try {
     valideEmail(emailValue)
     hideError(email)
   } catch (error) {
     throwError(email, error.message)
+    isValide = false;
   }
   try {
     valideDate(birthdayDate)
     hideError(brtDate)
   } catch (error) {
     throwError(brtDate, error.message)
+    isValide = false;
   }
   try {
     valideQuantity(quantity)
     hideError(quantityValue)
   } catch (error) {
     throwError(quantityValue, error.message)
+    isValide = false;
   }
   try {
     valideLocation()
     hideError(parentLocation)
   } catch (error) {
     throwError(parentLocation, error.message)
+    isValide = false;
   }
   try {
     validateCheck()
     hideError(checkboxInput)
   } catch (error) {
     throwError(checkboxInput, error.message)
+    isValide = false;
   }
-  successMessage()
+  if(isValide) {
+     successMessage()
+     closeModalSuccess()
+  }
+ 
 }
 
 const successMessage = () => {
-  closeModal()
-  document.querySelector('.confirmModal').style.display = "block";
+  if (validateFirst && validateLast && valideEmail && valideDate && valideQuantity && valideLocation && validateCheck) {
+    form.reset()
+    closeModal()
+    document.querySelector('.confirmModal').style.display = "block";
+    closeModalSuccess()
+  }
 }
 
-const confirmModalClose = document.querySelector('.confirmModalClose');
+const closeModalSuccess = () => {
+  const confirmModalClose = document.querySelector('.confirmModalClose');
+  const closeModalSucc = document.querySelector('.closeModal')
 
-confirmModalClose.addEventListener('click', closeConfirmModal);
+  closeModalSucc.addEventListener('click', closeConfirmModal)
+  confirmModalClose.addEventListener('click', closeConfirmModal);
 
-function closeConfirmModal() {
-  document.querySelector('.confirmModal').style.display = "none";
+  function closeConfirmModal() {
+    document.querySelector('.confirmModal').style.display = "none";
+  }
 }
 
 form.addEventListener('submit', (event) => {
