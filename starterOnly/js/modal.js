@@ -12,6 +12,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelector(".close");
+const successModal = document.querySelector('.successModal');
 
 //Forrm DOM Elements
 const form = document.querySelector("form");
@@ -26,6 +27,8 @@ const checkboxInput = document.getElementById('checkbox1')
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+
+// close modal event
 modalClose.addEventListener("click", closeModal);
 
 // launch modal form
@@ -33,6 +36,7 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
+// close modal form
 function closeModal() {
   modalbg.style.display = "none";
 }
@@ -80,8 +84,8 @@ const valideLocation = () => {
   }
 }
 
-const validateCheck = (input) => {
-  if (!input.checked) {
+const validateCheck = () => {
+  if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
   }
 }
@@ -89,13 +93,11 @@ const validateCheck = (input) => {
 //Error messages 
 
 const throwError = (element, message) => {
-  console.log(element)
   element.parentElement.setAttribute("data-error", message);
   element.parentElement.setAttribute("data-error-visible", true);
 }
 
 const hideError = (element) => {
-  console.log(element)
   element.parentElement.removeAttribute("data-error");
   element.parentElement.removeAttribute("data-error-visible", true);
 }
@@ -113,52 +115,65 @@ const validateForm = () => {
   const parentLocation = locationValue[0];
 
 
-  // try {
-  //   validateFirst(firstName)
-  //   hideError(first)
-  // } catch (error) {
-  //   throwError(first, error.message)
-  // }
-  // try {
-  //   validateLast(lastName)
-  //   hideError(last)
-  // } catch (error) {
-  //   throwError(last, error.message)
-  // }
-  // try {
-  //   valideEmail(emailValue)
-  //   hideError(email)
-  // } catch (error) {
-  //   throwError(email, error.message)
-  // }
-  // try {
-  //   valideDate(birthdayDate)
-  //   hideError(brtDate)
-  // } catch (error) {
-  //   throwError(brtDate, error.message)
-  // }
-  // try {
-  //   valideQuantity(quantity)
-  //   hideError(quantityValue)
-  // } catch (error) {
-  //   throwError(quantityValue, error.message)
-  // }
-  // try {
-  //   valideLocation()
-  //   hideError(parentLocation)
-  // } catch (error) {
-  //   throwError(parentLocation, error.message)
-  // }
   try {
-    validateCheck(checkboxInput)
+    validateFirst(firstName)
+    hideError(first)
+  } catch (error) {
+    throwError(first, error.message)
+  }
+  try {
+    validateLast(lastName)
+    hideError(last)
+  } catch (error) {
+    throwError(last, error.message)
+  }
+  try {
+    valideEmail(emailValue)
+    hideError(email)
+  } catch (error) {
+    throwError(email, error.message)
+  }
+  try {
+    valideDate(birthdayDate)
+    hideError(brtDate)
+  } catch (error) {
+    throwError(brtDate, error.message)
+  }
+  try {
+    valideQuantity(quantity)
+    hideError(quantityValue)
+  } catch (error) {
+    throwError(quantityValue, error.message)
+  }
+  try {
+    valideLocation()
+    hideError(parentLocation)
+  } catch (error) {
+    throwError(parentLocation, error.message)
+  }
+  try {
+    validateCheck()
     hideError(checkboxInput)
   } catch (error) {
     throwError(checkboxInput, error.message)
   }
+  successMessage()
 }
 
+const successMessage = () => {
+  closeModal()
+  document.querySelector('.confirmModal').style.display = "block";
+}
+
+const confirmModalClose = document.querySelector('.confirmModalClose');
+
+confirmModalClose.addEventListener('click', closeConfirmModal);
+
+function closeConfirmModal() {
+  document.querySelector('.confirmModal').style.display = "none";
+}
 
 form.addEventListener('submit', (event) => {
   event.preventDefault()
   validateForm()
-});
+})
