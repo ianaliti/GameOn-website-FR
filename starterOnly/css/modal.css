@@ -61,12 +61,14 @@ img {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
+  text-decoration: underline;
 }
 
 .topnav a.active {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
+  text-decoration: underline;
 }
 
 .topnav .icon {
@@ -74,6 +76,12 @@ img {
 }
 
 @media screen and (max-width: 768px) {
+  .topnav {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+  }
+
   .topnav a {
     display: none;
   }
@@ -81,12 +89,14 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    margin: 0;
+    background: none;
+    color: red;
   }
-}
 
-@media screen and (max-width: 768px) {
   .topnav.responsive {
     position: relative;
+    z-index: 2;
   }
 
   .topnav.responsive .icon {
@@ -99,22 +109,29 @@ img {
     float: none;
     display: block;
     text-align: left;
+    position: relative;
+    top: 40px;
+  }
+
+  .main-navbar {
+    background-color: #ffffff;
+    border-radius: 10px;
+    position: fixed;
+    right: 20px;
+    height: 20%;
+  }
+
+  .bground {
+    background-color: transparent;
+    margin-top: 69px;
+    top: 10px;
+  }
+
+  .confirmModal {
+    top: 120px;
   }
 }
 
-
-
-@media screen and (max-width: 540px) {
-  .topnav a {
-    display: none;
-  }
-
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-}
 
 main {
   font-size: 130%;
@@ -126,8 +143,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -165,7 +180,7 @@ main {
   border: none;
   width: 50%;
   position: relative;
-  bottom: -250px;
+  bottom: -220px;
 }
 
 .button:hover {
@@ -181,11 +196,11 @@ main {
   position: fixed;
   z-index: 1;
   left: 0;
-  top: 0;
-  height: 100%;
+  top: 5px;
+  height: 100vh;
   width: 100%;
   overflow: auto;
-  background-color: rgba(26, 39, 156, 0.4);
+  background-color: white;
 }
 
 .content {
@@ -531,6 +546,12 @@ footer {
   margin: 0 20px;
 }
 
+@media screen and (max-width: 768px) {
+  footer {
+    margin-top: 20%;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
@@ -591,7 +612,7 @@ footer {
 
 .confirmModal {
   position: fixed;
-  top: 0;
+  top: 10px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -599,20 +620,9 @@ footer {
   display: none;
 }
 
-.confirmModalBody {
-  z-index: 1;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: #232323;
-  padding: 10px;
-  border-radius: 10px;
-}
-
 .confirmModalContent {
   display: flex;
+  margin: 50% auto ;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -625,3 +635,4 @@ footer {
   color: #fff;
   width: 60%;
 }
+

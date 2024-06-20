@@ -18,8 +18,8 @@
     </div>
     <div class="main-navbar">
       
-      <a href="#" class="active"><span>Accueil</span></a>
-      <a href="#"><span>Détails de l'évènement</span></a>
+      <!-- <a href="#" class="active"><span>Accueil</span></a> -->
+      <a href="#" class="active"><span>Détails de l'évènement</span></a>
       <a href="#"><span>À propos</span></a>
       <a href="#"><span>Contact</span></a>
       <a href="#"><span>Évènements passés</span></a>
@@ -103,6 +103,8 @@
                   type="date"
                   id="birthdate"
                   name="birthdate"
+                  min="1900-01-01" 
+                  max="2050-01-01"
                 />
                 <br>
               </div>
@@ -213,8 +215,8 @@
           </div>
         </div>
       </div>
-      <div class="confirmModal modalbg">
-        <div class="confirmModalBody">
+      <div class="confirmModal modalbg bground">
+        <div class="content">
           <div class="confirmModalContent">
             <span class="closeModal close"></span>
             <p class="confirmModalText">

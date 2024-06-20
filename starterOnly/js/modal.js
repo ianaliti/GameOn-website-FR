@@ -13,6 +13,9 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelector(".close");
 const successModal = document.querySelector('.successModal');
+const topnav = document.querySelector('.topnav');
+const heroSection = document.querySelector('.hero-section');
+// const footer = document.querySelector('footer');
 
 //Forrm DOM Elements
 const form = document.querySelector("form");
@@ -34,11 +37,17 @@ modalClose.addEventListener("click", closeModal);
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  topnav.style.position = "fixed";
+  heroSection.style.display = "none";
+  // footer.style.display = "none;"
 }
 
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  topnav.style.position = "relative";
+  heroSection.style.display = "block";
+  // footer.style.display = "block;"
 }
 
 
@@ -166,11 +175,11 @@ const validateForm = () => {
     throwError(checkboxInput, error.message)
     isValide = false;
   }
-  if(isValide) {
-     successMessage()
-     closeModalSuccess()
+  if (isValide) {
+    successMessage()
+    closeModalSuccess()
   }
- 
+
 }
 
 const successMessage = () => {
@@ -178,6 +187,9 @@ const successMessage = () => {
     form.reset()
     closeModal()
     document.querySelector('.confirmModal').style.display = "block";
+    topnav.style.position = "fixed";
+    heroSection.style.display = "none";
+    // footer.style.display = "none;"
     closeModalSuccess()
   }
 }
@@ -191,6 +203,9 @@ const closeModalSuccess = () => {
 
   function closeConfirmModal() {
     document.querySelector('.confirmModal').style.display = "none";
+    topnav.style.position = "relative";
+    heroSection.style.display = "block";
+    // footer.style.display = "block;"
   }
 }
 
