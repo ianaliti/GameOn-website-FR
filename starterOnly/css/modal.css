@@ -34,7 +34,8 @@ img {
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  padding: 3.5%;
+  background-color: #fff;
 }
 
 .header-logo {
@@ -43,6 +44,10 @@ img {
 
 .main-navbar {
   float: right;
+}
+
+.main-navbar.responsive {
+  height: 20vh;
 }
 
 .topnav a {
@@ -75,11 +80,18 @@ img {
   display: none;
 }
 
+@media screen and (max-width: 425px) {
+  .main-navbar.responsive {
+    height: 40vh;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .topnav {
     display: flex;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
+    z-index: 2;
   }
 
   .topnav a {
@@ -113,12 +125,12 @@ img {
     top: 40px;
   }
 
-  .main-navbar {
-    background-color: #ffffff;
-    border-radius: 10px;
+  .main-navbar.responsive {
     position: fixed;
-    right: 20px;
-    height: 20%;
+    right: 10px;
+    z-index: 2;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
   }
 
   .bground {
@@ -126,12 +138,16 @@ img {
     margin-top: 69px;
     top: 10px;
   }
-
-  .confirmModal {
-    top: 120px;
-  }
 }
 
+@media screen and (width: 800px) {
+  .main-navbar.responsive {
+    height: 0;
+  }
+  .bground {
+    margin-top: 40px;
+  }
+}
 
 main {
   font-size: 130%;
@@ -196,7 +212,7 @@ main {
   position: fixed;
   z-index: 1;
   left: 0;
-  top: 5px;
+  top: 0px;
   height: 100vh;
   width: 100%;
   overflow: auto;
@@ -205,6 +221,7 @@ main {
 
 .content {
   margin: 5% auto;
+  margin-bottom: 20%;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
@@ -477,7 +494,7 @@ input[data-error]::after {
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+  /* min-width: 424px; */
 }
 
 .hero-content::after {
@@ -546,11 +563,12 @@ footer {
   margin: 0 20px;
 }
 
-@media screen and (max-width: 768px) {
+
+/* @media screen and (max-width: 768px) {
   footer {
     margin-top: 20%;
   }
-}
+} */
 
 @media screen and (max-width: 800px) {
   .hero-section {
@@ -612,7 +630,6 @@ footer {
 
 .confirmModal {
   position: fixed;
-  top: 10px;
   right: 0;
   bottom: 0;
   left: 0;
