@@ -18,12 +18,12 @@ const modalClose = document.querySelector(".close");
 const successModal = document.querySelector('.successModal');
 const topnav = document.querySelector('.topnav');
 
-//Forrm DOM Elements
+//Form DOM Elements
 const form = document.querySelector("form");
 const first = document.getElementById('first');
 const last = document.getElementById('last');
 const email = document.getElementById('email');
-const brtDate = document.getElementById('birthdate');
+const brthDate = document.getElementById('birthdate');
 const quantityValue = document.getElementById('quantity');
 const locationValue = document.querySelectorAll('input[name="location"]')
 const checkboxInput = document.getElementById('checkbox1')
@@ -48,20 +48,23 @@ function closeModal() {
 }
 
 
-//validate functions
+// Validate functions
 
+// Check that the name value length is more than 2 characters
 const validateFirst = (name) => {
   if (name.length < 2) {
     throw new Error("Votre prénom doit comprendre au moins 2 caractères.")
   }
 }
 
+// Check that the length of the last name value is more than 2 characters
 const validateLast = (surname) => {
   if (surname.length < 2) {
     throw new Error("Votre nom doit comprendre au moins 2 caractères.")
   }
 }
 
+// Check that the email matches the regex and its length is more than zero
 const valideEmail = (email) => {
   let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+");
   if (!emailRegExp.test(email) || email.value === "") {
@@ -69,6 +72,7 @@ const valideEmail = (email) => {
   }
 }
 
+// Check that the birthday matches the regex and that date less than today current date
 const valideDate = (birthday) => {
   let todayDate = new Date();
   let dateRegExp = new RegExp("^((19[2-9][0-9])|(200[0-6]))(\/|-)(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])$");
@@ -77,19 +81,22 @@ const valideDate = (birthday) => {
   }
 }
 
+// Check that the value is a number
 const valideQuantity = (num) => {
   if (!parseInt(num)) {
     throw new Error("Veuillez choisir un nombre");
   }
 }
 
-const valideLocation = () => {
+// Check that the location is selected
+const valideLocation = (locationValue) => {
   const isChecked = Array.from(locationValue).some(loc => loc.checked);
   if (!isChecked) {
     throw new Error("Veuillez choisir une option de localisation.");
   }
 }
 
+// Check that the checkbox with conditions is selected
 const validateCheck = () => {
   if (!checkboxInput.checked) {
     throw new Error("Vous devez vérifier que vous acceptez les termes et conditions.")
@@ -98,80 +105,47 @@ const validateCheck = () => {
 
 //Error messages 
 
+// Send specific error message 
+// Add data-error id and data-error-visible true in CSS
 const throwError = (element, message) => {
   element.parentElement.setAttribute("data-error", message);
   element.parentElement.setAttribute("data-error-visible", true);
 }
 
+// 2nd submit, hide a valid field previous invlid
+// Remove data-error id and switch data-error-visible to false in CSS
 const hideError = (element) => {
   element.parentElement.removeAttribute("data-error");
   element.parentElement.removeAttribute("data-error-visible", true);
 }
 
 
-
 //Validate form
 const validateForm = () => {
-
-  const firstName = first.value.trim();
-  const lastName = last.value.trim();
-  const emailValue = email.value.trim()
-  const birthdayDate = brtDate.value.trim();
-  const quantity = quantityValue.valueAsNumber;
-  const parentLocation = locationValue[0];
-
   let isValide = true;
 
+// Create an array field with objects to maintain the value, DOM elements, and functions
+  const fields = [
+    { value: first.value.trim(), element: first, validator: validateFirst }, 
+    { value: last.value.trim(), element: last, validator: validateLast },
+    { value: email.value.trim(), element: email, validator: valideEmail },
+    { value: brthDate.value.trim(), element: brthDate, validator: valideDate },
+    { value: quantityValue.valueAsNumber, element: quantityValue, validator: valideQuantity },
+    { value: locationValue, element: locationValue[0], validator: valideLocation },
+    { value: !checkboxInput.checked, element: checkboxInput, validator: validateCheck }
+  ]
 
-  try {
-    validateFirst(firstName)
-    hideError(first)
-  } catch (error) {
-    throwError(first, error.message)
-    isValide = false;
-  }
-  try {
-    validateLast(lastName)
-    hideError(last)
-  } catch (error) {
-    throwError(last, error.message)
-    isValide = false;
-  }
-  try {
-    valideEmail(emailValue)
-    hideError(email)
-  } catch (error) {
-    throwError(email, error.message)
-    isValide = false;
-  }
-  try {
-    valideDate(birthdayDate)
-    hideError(brtDate)
-  } catch (error) {
-    throwError(brtDate, error.message)
-    isValide = false;
-  }
-  try {
-    valideQuantity(quantity)
-    hideError(quantityValue)
-  } catch (error) {
-    throwError(quantityValue, error.message)
-    isValide = false;
-  }
-  try {
-    valideLocation()
-    hideError(parentLocation)
-  } catch (error) {
-    throwError(parentLocation, error.message)
-    isValide = false;
-  }
-  try {
-    validateCheck()
-    hideError(checkboxInput)
-  } catch (error) {
-    throwError(checkboxInput, error.message)
-    isValide = false;
-  }
+  // Check if the validator function runs with the value without error. If yes, hide the error. If no, display an error with the corresponding message
+  fields.forEach(({ value, element, validator }) => {
+    try {
+      validator(value);
+      hideError(element);
+    } catch (error) {
+      throwError(element, error.message);
+      isValide = false;
+    }
+  });
+
   if (isValide) {
     successMessage()
     closeModalSuccess()
@@ -179,6 +153,7 @@ const validateForm = () => {
 
 }
 
+// // Check if the validation function runs without errors. If so, clear the form, close it, and show a new success modal.
 const successMessage = () => {
   if (validateFirst && validateLast && valideEmail && valideDate && valideQuantity && valideLocation && validateCheck) {
     form.reset()
@@ -189,6 +164,7 @@ const successMessage = () => {
   }
 }
 
+// Close the success modal using the "ferme" button and modalbg button
 const closeModalSuccess = () => {
   const confirmModalClose = document.querySelector('.confirmModalClose');
   const closeModalSucc = document.querySelector('.closeModal')
@@ -202,6 +178,7 @@ const closeModalSuccess = () => {
   }
 }
 
+// Submit form
 form.addEventListener('submit', (event) => {
   event.preventDefault()
   validateForm()
