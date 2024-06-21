@@ -1,3 +1,5 @@
+
+// Add the responsive class to navbar and topnav to open and close the navbar
 function editNav() {
   let x = document.getElementById("myTopnav");
   let navbar = document.getElementById("myNavbar")
@@ -18,7 +20,7 @@ const modalClose = document.querySelector(".close");
 const successModal = document.querySelector('.successModal');
 const topnav = document.querySelector('.topnav');
 
-//Form DOM Elements
+// Form DOM Elements
 const form = document.querySelector("form");
 const first = document.getElementById('first');
 const last = document.getElementById('last');
@@ -120,7 +122,7 @@ const hideError = (element) => {
 }
 
 
-//Validate form
+// Validate form
 const validateForm = () => {
   let isValide = true;
 
@@ -153,7 +155,7 @@ const validateForm = () => {
 
 }
 
-// // Check if the validation function runs without errors. If so, clear the form, close it, and show a new success modal.
+// Check if the validation function runs without errors. If so, clear the form, close it, and show a new success modal.
 const successMessage = () => {
   if (validateFirst && validateLast && valideEmail && valideDate && valideQuantity && valideLocation && validateCheck) {
     form.reset()
