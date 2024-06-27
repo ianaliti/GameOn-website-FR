@@ -17,8 +17,10 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelector(".close");
-const successModal = document.querySelector('.successModal');
 const topnav = document.querySelector('.topnav');
+const confirmModal =  document.querySelector('.confirmModal');
+const confirmModalClose = document.querySelector('.confirmModalClose');
+const closeModalSucc = document.querySelector('.closeModal');
 
 // Form DOM Elements
 const form = document.querySelector("form");
@@ -31,17 +33,17 @@ const locationValue = document.querySelectorAll('input[name="location"]')
 const checkboxInput = document.getElementById('checkbox1')
 
 
-// launch modal event
+// launch modal event 
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// close modal event
-modalClose.addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
-  topnav.style.position = "fixed";;
+  topnav.style.position = "fixed";
 }
+
+// close modal event
+modalClose.addEventListener("click", closeModal);
 
 // close modal form
 function closeModal() {
@@ -49,6 +51,11 @@ function closeModal() {
   topnav.style.position = "relative";
 }
 
+// Submit form
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  validateForm()
+})
 
 // Validate functions
 
@@ -160,7 +167,7 @@ const successMessage = () => {
   if (validateFirst && validateLast && valideEmail && valideDate && valideQuantity && valideLocation && validateCheck) {
     form.reset()
     closeModal()
-    document.querySelector('.confirmModal').style.display = "block";
+    confirmModal.style.display = "block";
     topnav.style.position = "fixed";
     closeModalSuccess()
   }
@@ -168,20 +175,11 @@ const successMessage = () => {
 
 // Close the success modal using the "ferme" button and modalbg button
 const closeModalSuccess = () => {
-  const confirmModalClose = document.querySelector('.confirmModalClose');
-  const closeModalSucc = document.querySelector('.closeModal')
-
   closeModalSucc.addEventListener('click', closeConfirmModal)
   confirmModalClose.addEventListener('click', closeConfirmModal);
 
-  function closeConfirmModal() {
-    document.querySelector('.confirmModal').style.display = "none";
+  function closeConfirmModal () {
+    confirmModal.style.display = "none";
     topnav.style.position = "relative";
   }
 }
-
-// Submit form
-form.addEventListener('submit', (event) => {
-  event.preventDefault()
-  validateForm()
-})
