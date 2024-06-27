@@ -61,14 +61,16 @@ form.addEventListener('submit', (event) => {
 
 // Check that the name value length is more than 2 characters
 const validateFirst = (name) => {
-  if (name.length < 2) {
+  let nameRegex = new RegExp("([a-zA-Z_\s]+)");
+  if (!nameRegex.test(name) || name.length < 2) {
     throw new Error("Votre prénom doit comprendre au moins 2 caractères.")
   }
 }
 
 // Check that the length of the last name value is more than 2 characters
 const validateLast = (surname) => {
-  if (surname.length < 2) {
+  let nameRegex = new RegExp("([a-zA-Z_\s]+)");
+  if (!nameRegex.test(surname)|| surname.length < 2) {
     throw new Error("Votre nom doit comprendre au moins 2 caractères.")
   }
 }
