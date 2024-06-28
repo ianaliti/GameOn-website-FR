@@ -15,7 +15,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelector(".close");
 const topnav = document.querySelector('.topnav');
 const confirmModal =  document.querySelector('.confirmModal');
@@ -127,7 +126,7 @@ const throwError = (element, message) => {
 // Remove data-error id and switch data-error-visible to false in CSS
 const hideError = (element) => {
   element.parentElement.removeAttribute("data-error");
-  element.parentElement.removeAttribute("data-error-visible", true);
+  element.parentElement.removeAttribute("data-error-visible");
 }
 
 
