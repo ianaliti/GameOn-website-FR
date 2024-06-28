@@ -86,7 +86,7 @@ const valideEmail = (email) => {
 // Check that the birthday matches the regex and that date less than today current date
 const valideDate = (birthday) => {
   let todayDate = new Date();
-  let dateRegExp = new RegExp("^((19[2-9][0-9])|(200[0-6]))(\/|-)(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])$");
+  let dateRegExp = new RegExp("^((19[2-9][0-9])|(200[0-6]))(\/|-)(0[1-9]|1[1,2])(\/|-)(0[1-9]|[12][0-9]|3[01])$");
   if (!dateRegExp.test(birthday) || new Date(birthday) > todayDate) {
     throw new Error("Vous devez entrer votre date de naissance.")
   }
@@ -159,7 +159,6 @@ const validateForm = () => {
 
   if (isValide) {
     successMessage()
-    closeModalSuccess()
   }
 
 }
